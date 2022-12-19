@@ -15,7 +15,13 @@ public class ConditionNode : NodeBase
 
     public override void Execute()
     {
-        Children?.Execute();
+        var result =   kiki.lizzie.LambdaCompiler.Compile("eq(2,2)");
+        var obj = (bool)result.Invoke();
+        if (obj) 
+        {
+            Children?.Execute();
+        }
+        
     }
 
     public override string ToScript()

@@ -10,15 +10,17 @@ namespace UBotCore.Nodes;
 public  class AskUserNode:NodeBase
 {
     public string Question { get; set; }
-    public List<Identity> UserAnswerOptions { get; set; }
-    public List<ConditionNode> Conditions { get; set; } 
+    public Identity UserAnswerOptionsType { get; set; }
+    public List<object> UserAnswerOptionsValue { get; set; }
+    public List<ConditionNode> Conditions { get; private set; } 
     public string VarToSaveResponse { get; set; }
 
     public override void Execute()
     {
         Console.WriteLine($"Bot: {Question}");
-        var answer = Console.ReadLine();
-        Console.WriteLine($"Human: {answer}");
+        Console.Write($"Human:");
+        var answer = Console.ReadLine();   
+
         foreach (var s in this.Conditions) {
             s?.Execute();
         }
