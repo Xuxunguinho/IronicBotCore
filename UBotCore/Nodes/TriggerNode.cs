@@ -9,13 +9,15 @@ namespace UBotCore.Nodes
 {
     public class TriggerNode : NodeBase
     {
-        public override void Execute()
+        public override void Execute(Bot bot, BotDialog dialog, string userResponse)
         {
+            base.Execute(bot,dialog,userResponse);
             Console.WriteLine($"Bot: Ola humano eu sou o Yuca Bot em que lhe posso ajudar ? ");
-            Children?.Execute();
+           
         }
         public override string ToScript()
         {
+
             throw new NotImplementedException();
         }
 

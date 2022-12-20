@@ -7,14 +7,15 @@ using UBotCore.BaseClasses;
 
 namespace UBotCore.Nodes;
 
-internal class MessageNode : NodeBase
+public  class MessageNode : NodeBase
 {
     public string Body { get; set; }
     public bool IsFile { get; set; }
     public string FileName { get; set; }
 
-    public override void Execute()
+    public override void Execute(Bot bot, BotDialog dialog, string userResponse)
     {
+        base.Execute( bot, dialog,userResponse);
         Console.WriteLine($"Bot: {Body}");
     }
 

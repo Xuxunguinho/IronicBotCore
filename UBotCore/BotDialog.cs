@@ -10,13 +10,19 @@ namespace UBotCore
     public class BotDialog
     {
 
+        public BotDialog()
+        {
+            Id = Guid.NewGuid();    
+        }
+        public Guid Id { get; set; }   
+        public Guid? ChanelId { get; set; }
+        public Guid? CurrentTopicId { get; set; }   
+        public Guid? CurrentNodeId { get; set; }
+        public Dictionary<string, object> Variables { get; set; } = new Dictionary<string, object>();
+        public bool WaitingAnswer { get; set; }
 
-        public Guid Id { get; set; }
-        public Human Human { get; set; }
-        public Guid ChanelId { get; set; }
-        public Guid CurrentTopicId { get; set; }   
-        public Guid CurrentNodeId { get; set; }
-        public List<(Guid, Guid, string)> HumanMessage { get; set; }
+        public void WaitUser() => WaitingAnswer = true;
+        public void NoWaitUser() => WaitingAnswer = false;
 
     }
 }

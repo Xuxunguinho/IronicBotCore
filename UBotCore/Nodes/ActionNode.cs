@@ -11,11 +11,13 @@ internal class ActionNode : NodeBase
 {
     public string Action { get; set; }
 
-    public override void Execute()
-    {
-        throw new NotImplementedException();
-    }
 
+    public override void Execute(Bot bot, BotDialog dialog, string userResponse)
+    {
+        base.Execute(bot,dialog,userResponse);
+
+
+    }
     public override string ToScript()
     {
        return Action;
