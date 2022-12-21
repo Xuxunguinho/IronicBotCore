@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using IronicBotCore.Models;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using UBotCore.Models;
 
-namespace UBotCore
+namespace IronicBotCore
 {
     internal static class Extensions
     {

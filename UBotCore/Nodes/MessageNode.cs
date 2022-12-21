@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using UBotCore.BaseClasses;
-using UBotCore.Models;
+﻿using IronicBotCore.BaseClasses;
+using IronicBotCore.Models;
 
-namespace UBotCore.Nodes;
+namespace IronicBotCore.Nodes;
 
 public class MessageNode : NodeBase
 {
@@ -15,9 +9,9 @@ public class MessageNode : NodeBase
     public bool IsFile { get; set; }
     public string FileName { get; set; }
 
-    public override void Execute(Bot bot, BotDialog dialog, string userResponse)
+    public override void Execute(BotDialog dialog, string userResponse)
     {
-        base.Execute(bot, dialog, userResponse);
+        base.Execute(dialog, userResponse);
         Console.WriteLine($"Bot: {Body.ReplaceInternalVariables(dialog)}");
     }
 

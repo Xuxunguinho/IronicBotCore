@@ -1,14 +1,9 @@
-﻿using kiki;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UBotCore.BaseClasses;
-using UBotCore.Interfaces;
-using UBotCore.Models;
+﻿using IronicBotCore.BaseClasses;
+using IronicBotCore.Models;
+using kiki;
 
-namespace UBotCore.Nodes;
+
+namespace IronicBotCore.Nodes;
 
 public class ConditionNode : NodeBase
 {
@@ -19,9 +14,9 @@ public class ConditionNode : NodeBase
     private readonly List<string> Operators = new List<string> { "=", ">", "<", ">=", "<=" };
 
     public bool IsTrue { get; private set; }
-    public override void Execute(Bot bot, BotDialog dialog, string userResponse)
+    public override void Execute(BotDialog dialog, string userResponse)
     {
-        base.Execute(bot, dialog, userResponse);
+        base.Execute(dialog, userResponse);
 
         if (!Operators.Contains(Operator))
             throw new Exception("Operador nao encontrado");
@@ -56,7 +51,7 @@ public class ConditionNode : NodeBase
         IsTrue = obj;
         if (obj)
         {
-            dialog.CurrentNodeId = this.NextNode;
+            dialog.CurrentNodeId = NextNode;
         }
     }
 

@@ -1,9 +1,11 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using System.Text.RegularExpressions;
+using IronicBotCore;
+using IronicBotCore.Interfaces;
+using IronicBotCore.Models;
+using IronicBotCore.Nodes;
+using IronicBotCore.Repositories;
 using System.Xml.Linq;
-using UBotCore;
-using UBotCore.Nodes;
-using UBotCore.Repositories;
+
 
 internal class Program
 {
@@ -36,14 +38,14 @@ internal class Program
       Description="",
       Name ="Saudacao",
       TriggerPhrases= new List<string> { "ola","oi","bom dia","boa noite" ,"boa Tarde"},
-      Nodes = new List<UBotCore.Interfaces.INode> {
+      Nodes = new List<INode> {
             new QuestionNode { Id=messageId,
                 Question= "Olá, eu sou a Yuca, a Assistente Virtual da Ucall." +
                 " Em que posso ajudar? \n \n Seleccione por favor  em que Área precisa " +
                 "do meu Auxilio:\r\n  - Comercial \n  - Recrutamento\n  - Colaboradores " +
                 " \n  - Outros Assuntos"
 
-               ,UserAnswerOptionsType= identityRepository.Get("any")?? new UBotCore.Models.Identity(),
+               ,UserAnswerOptionsType= identityRepository.Get("any")?? new Identity(),
 
                 UserAnswerOptionsValue=  new List<string>{ "Comercial", "Recrutamento", "Colaboradores", "Outros Assuntos" },
                 VarToSaveResponse="@var1"
@@ -63,13 +65,13 @@ internal class Program
       Description="",
       Name ="Saudacao",
       TriggerPhrases= new List<string> { "recrutar","recruta","recrutamento","candidatura" ,"candidatar"},
-      Nodes = new List<UBotCore.Interfaces.INode> {
+      Nodes = new List<INode> {
            new QuestionNode { Id = Id2,
                 Question= "Bem-vindo(a) à nossa Área de Recrutamento.\r\nPor favor, marque: \r\n\r\n " +
                 " 1 - Candidatura para a função de Assistente de Contact Center.\r\n " +
                 " 2 -  Regressar ao Menu Inicial\r\nPara outras oportunidades," +
                 " deverá consultar o nosso site (link site) "
-               ,UserAnswerOptionsType= identityRepository.Get("number") ?? new UBotCore.Models.Identity(),
+               ,UserAnswerOptionsType= identityRepository.Get("number") ?? new Identity(),
                 UserAnswerOptionsValue=  new List<string>{ "1", "2" }
                ,VarToSaveResponse="@var2"
             ,   Conditions = new List<ConditionNode>
@@ -81,27 +83,27 @@ internal class Program
            new QuestionNode {
                Id = Id3,
                Question ="Por favor indique seu nome completo",
-               UserAnswerOptionsType = identityRepository.Get("any")?? new UBotCore.Models.Identity()
+               UserAnswerOptionsType = identityRepository.Get("any")?? new Identity()
               ,VarToSaveResponse = "@name",
                NextNode = Id4
            },
            new QuestionNode {
                Id = Id4,
                Question ="Por favor indique seu número de Bilhete",
-               UserAnswerOptionsType = identityRepository.Get("bilhete")?? new UBotCore.Models.Identity()
+               UserAnswerOptionsType = identityRepository.Get("bilhete")?? new Identity()
               ,VarToSaveResponse = "@bi",
                NextNode = Id5
            }
            , new QuestionNode {
                Id = Id5,
                Question ="Por favor indique seu Endereço de Email",
-               UserAnswerOptionsType = identityRepository.Get("email")?? new UBotCore.Models.Identity()
+               UserAnswerOptionsType = identityRepository.Get("email")?? new Identity()
               ,VarToSaveResponse = "@email",
                NextNode = Id6           }
            , new QuestionNode {
                Id = Id6,
                Question ="Por favor indique sua data de nasciento",
-               UserAnswerOptionsType = identityRepository.Get("date")?? new UBotCore.Models.Identity()
+               UserAnswerOptionsType = identityRepository.Get("date")?? new Identity()
               ,VarToSaveResponse = "@data_nascimento",
                NextNode = Id7
            }
