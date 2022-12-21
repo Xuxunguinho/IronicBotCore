@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using UBotCore.BaseClasses;
 using UBotCore.Interfaces;
+using UBotCore.Models;
 
 namespace UBotCore
 {
@@ -27,7 +28,7 @@ namespace UBotCore
             if (dialogId.HasValue)
             {
                 dialog = DialogMap.FirstOrDefault(x => x.Id == dialogId);
-               
+
                 // listening user if bot is waiting a user response
                 if (dialog?.WaitingAnswer ?? false)
                 {
@@ -47,6 +48,9 @@ namespace UBotCore
                     if (dialog.CurrentNodeId.HasValue)
                         node = topic.Nodes.FirstOrDefault(s => s.Id == dialog.CurrentNodeId.Value);
                     else
+                        node = topic.Nodes[0];
+
+                    if (node is null && topic is not null)
                         node = topic.Nodes[0];
 
                     node?.Execute(this, dialog, messageBody);

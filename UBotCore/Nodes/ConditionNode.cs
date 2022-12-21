@@ -1,10 +1,12 @@
-﻿using System;
+﻿using kiki;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UBotCore.BaseClasses;
 using UBotCore.Interfaces;
+using UBotCore.Models;
 
 namespace UBotCore.Nodes;
 
@@ -30,6 +32,10 @@ public class ConditionNode : NodeBase
         var left = LeftOperand.Contains("@") ? dialog.Variables[LeftOperand] : LeftOperand;
         var right = RightOperand.Contains("@") ? dialog.Variables[LeftOperand] : RightOperand;
 
+        //normalize string for best comparison
+        left = left.ToString().Normalized().ToLower();
+        right = right.ToString().Normalized().ToLower();
+
         if (Operator.Equals("="))
             condition = $"eq('{left}', '{right}')";
 
@@ -49,16 +55,10 @@ public class ConditionNode : NodeBase
         var obj = (bool)result.Invoke();
         IsTrue = obj;
         if (obj)
-        {           
-            dialog.CurrentNodeId = this.NextNode;                   
-        }        
+        {
+            dialog.CurrentNodeId = this.NextNode;
+        }
     }
 
-    
-
-    public override string ToScript()
-    {
-        return "";
-    }
 
 }

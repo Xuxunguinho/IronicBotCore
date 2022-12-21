@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using UBotCore.BaseClasses;
+using UBotCore.Models;
 
 namespace UBotCore.Nodes;
 
@@ -16,7 +17,8 @@ public class QuestionNode : NodeBase
     public List<string> UserAnswerOptionsValue { get; set; }
     public List<ConditionNode> Conditions { get; set; }
     public string VarToSaveResponse { get; set; }
-    public Guid? NextNode { get; private set; }
+
+    public Guid? NextNode { get; set; }
     public QuestionNode()
     {
         this.NextNode = null;
@@ -25,7 +27,7 @@ public class QuestionNode : NodeBase
     public override void Execute(Bot bot, BotDialog dialog, string userResponse)
     {
         base.Execute(bot, dialog, userResponse);
-              
+
 
         if (!dialog.WaitingAnswer)
         {
@@ -47,16 +49,21 @@ public class QuestionNode : NodeBase
         }
         else
         {
-
-
-
+            var normalizedResponse = userResponse;
             var matchRegx = UserAnswerOptionsType.IsValid(userResponse);
 
             if (!matchRegx)
             {
-                Console.WriteLine("Formato errado");
+                Console.WriteLine(" ==> Os dados inseridos não estão no formato esperado <==");
+                dialog.NoWaitUser();
+                dialog.SetCurrentNode(this.Id);
+                bot.Listem(dialog.Id);
                 return;
             }
+
+            if (UserAnswerOptionsType.Name.Equals("any"))
+                normalizedResponse = userResponse.Normalized();
+
             if (VarToSaveResponse.IsNullOrEmpty())
             {
                 VarToSaveResponse = $"@var{dialog.Variables.Count + 1}";
@@ -69,12 +76,25 @@ public class QuestionNode : NodeBase
 
                 if (!dialog.Variables.ContainsKey(VarToSaveResponse))
                     dialog.Variables.Add(VarToSaveResponse, userResponse);
+                else
+                    dialog.Variables[VarToSaveResponse] = userResponse;
             }
 
             var resultList = new List<bool>();
 
             if (Conditions.IsNullOrEmpty())
+            {
+                if (NextNode.HasValue)
+                {
+
+                    dialog.NoWaitUser();
+                    dialog.SetCurrentNode(NextNode.Value);
+                    bot.Listem(dialog.Id);
+                    return;
+                }
                 throw new Exception("Conditions node can not be null in QuestionNode");
+
+            }
 
             foreach (var item in Conditions)
             {
@@ -95,6 +115,7 @@ public class QuestionNode : NodeBase
 
                 Console.Write(strBuilder.ToString());
                 dialog.WaitUser();
+                dialog.SetCurrentNode(this.Id);
                 bot.Listem(dialog.Id);
             }
             else
@@ -106,10 +127,5 @@ public class QuestionNode : NodeBase
 
         }
 
-    }
-
-    public override string ToScript()
-    {
-        throw new NotImplementedException();
     }
 }
