@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using UBotCore.Interfaces;
-using UBotCore.Models;
+﻿using IronicBotCore.Interfaces;
+using IronicBotCore.Models;
 
-namespace UBotCore.BaseClasses;
+namespace IronicBotCore.BaseClasses;
 
 public abstract class NodeBase : INode
 {
@@ -19,11 +13,11 @@ public abstract class NodeBase : INode
         return string.Empty;
     }
 
-    public virtual void Execute(Bot bot, BotDialog dialog, string userResponse)
+    public virtual void Execute(BotDialog dialog, string userResponse)
     {
         dialog.CurrentNodeId = Id;
-        if (!bot.DialogMap.Any(x => x.Id == dialog.Id))
-            bot.DialogMap.Add(dialog);
+        if (!dialog.Bot.DialogMap.Any(x => x.Id == dialog.Id))
+            dialog.Bot.DialogMap.Add(dialog);
     }
 }
 

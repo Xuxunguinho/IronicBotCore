@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UBotCore.Models;
+﻿using IronicBotCore.Models;
 
-namespace UBotCore.Repositories
+namespace IronicBotCore.Repositories
 {
     internal class IdentityRepository
     {
@@ -13,7 +8,8 @@ namespace UBotCore.Repositories
 
         public IdentityRepository()
         {
-            identities = new List<Identity> {
+            identities = new List<Identity>
+              {
 
               new Identity { Id = Guid.NewGuid(),Name="email",Pattern= new System.Text.RegularExpressions.Regex("\\A([^@\\s]+)@((?:[-a-z0-9]+\\.)+[a-z]{2,})\\Z")},
               new Identity { Id = Guid.NewGuid(),Name="bilhete",Pattern= new System.Text.RegularExpressions.Regex("\\A([0-9]{9})([A-Z]{2})([0-9]{3})\\Z")},

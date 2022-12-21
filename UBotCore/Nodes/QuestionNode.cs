@@ -1,14 +1,9 @@
-﻿using kiki;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using IronicBotCore.BaseClasses;
+using IronicBotCore.Models;
+using kiki;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using UBotCore.BaseClasses;
-using UBotCore.Models;
 
-namespace UBotCore.Nodes;
+namespace IronicBotCore.Nodes;
 
 public class QuestionNode : NodeBase
 {
@@ -17,16 +12,9 @@ public class QuestionNode : NodeBase
     public List<string> UserAnswerOptionsValue { get; set; }
     public List<ConditionNode> Conditions { get; set; }
     public string VarToSaveResponse { get; set; }
-
-    public Guid? NextNode { get; set; }
-    public QuestionNode()
+    public override void Execute(BotDialog dialog, string userResponse)
     {
-        this.NextNode = null;
-    }
-
-    public override void Execute(Bot bot, BotDialog dialog, string userResponse)
-    {
-        base.Execute(bot, dialog, userResponse);
+        base.Execute(dialog, userResponse);
 
 
         if (!dialog.WaitingAnswer)
@@ -44,25 +32,25 @@ public class QuestionNode : NodeBase
 
             dialog.WaitUser();
             // only for contiue flux
-            bot.Listem(dialog.Id);
+            dialog.Bot.Listem(dialog.Id);
 
         }
         else
         {
-            var normalizedResponse = userResponse;
+
             var matchRegx = UserAnswerOptionsType.IsValid(userResponse);
 
             if (!matchRegx)
             {
                 Console.WriteLine(" ==> Os dados inseridos não estão no formato esperado <==");
                 dialog.NoWaitUser();
-                dialog.SetCurrentNode(this.Id);
-                bot.Listem(dialog.Id);
+                dialog.SetCurrentNode(Id);
+                dialog.Bot.Listem(dialog.Id);
                 return;
             }
 
-            if (UserAnswerOptionsType.Name.Equals("any"))
-                normalizedResponse = userResponse.Normalized();
+            //if (UserAnswerOptionsType.Name.Equals("any"))
+            //    normalizedResponse = userResponse.Normalized();
 
             if (VarToSaveResponse.IsNullOrEmpty())
             {
@@ -89,7 +77,7 @@ public class QuestionNode : NodeBase
 
                     dialog.NoWaitUser();
                     dialog.SetCurrentNode(NextNode.Value);
-                    bot.Listem(dialog.Id);
+                    dialog.Bot.Listem(dialog.Id);
                     return;
                 }
                 throw new Exception("Conditions node can not be null in QuestionNode");
@@ -98,7 +86,7 @@ public class QuestionNode : NodeBase
 
             foreach (var item in Conditions)
             {
-                item.Execute(bot, dialog, userResponse);
+                item.Execute(dialog, userResponse);
                 resultList.Add(item.IsTrue);
             }
 
@@ -115,13 +103,13 @@ public class QuestionNode : NodeBase
 
                 Console.Write(strBuilder.ToString());
                 dialog.WaitUser();
-                dialog.SetCurrentNode(this.Id);
-                bot.Listem(dialog.Id);
+                dialog.SetCurrentNode(Id);
+                dialog.Bot.Listem(dialog.Id);
             }
             else
             {
                 dialog.NoWaitUser();
-                bot.Listem(dialog.Id);
+                dialog.Bot.Listem(dialog.Id);
             }
 
 

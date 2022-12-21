@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UBotCore.Interfaces;
+﻿namespace IronicBotCore.Models;
 
-namespace UBotCore.Models
-{
-    public class BotDialog
+public class BotDialog
     {
         private Guid? _currentNodeId;
-        public BotDialog()
+        public BotDialog(Bot bot)
         {
             Id = Guid.NewGuid();
+            Bot = bot;
+            AddOrVariableValue(Constants.BOT_NAME_VARIABLE, bot.Name);
         }
+
+        public Bot Bot { get; set; }
         public Guid Id { get; set; }
         public Guid? ChanelId { get; set; }
         public Guid? CurrentTopicId { get; set; }
@@ -35,6 +32,15 @@ namespace UBotCore.Models
             }
         }
         public Dictionary<string, object> Variables { get; set; } = new Dictionary<string, object>();
+        public void AddOrVariableValue(string name, object value)
+        {
+
+            if (!Variables.ContainsKey(name))
+                Variables.Add(name, value);
+            else
+                Variables[name] = value;
+
+        }
         public bool WaitingAnswer { get; set; }
 
         public void WaitUser() => WaitingAnswer = true;
@@ -42,10 +48,9 @@ namespace UBotCore.Models
         public void SetCurrentNode(Guid id) => CurrentNodeId = id;
         public void SetCurrentTopic(Guid id)
         {
-
             CurrentTopicId = id;
             CurrentNodeId = Guid.Empty;
         }
 
     }
-}
+
