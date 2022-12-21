@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UBotCore.Models;
 
 namespace UBotCore.Interfaces
 {
-    public  interface INode
+    public interface INode
     {
         public Guid Id { get; set; }
-        public INode Children { get; set; }
-        public  string ToScript();
-        public  void Execute();
+        public Guid? NextNode { get; set; }
+        public string ToScript();
+        public void Execute(Bot bot, BotDialog dialog, string userResponse);
     }
 }

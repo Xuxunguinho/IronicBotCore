@@ -5,7 +5,7 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UBotCore", "UBotCore\UBotCore.csproj", "{CA6E14B4-8729-4346-8F16-9EC5128AEA7D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "kiki", "..\..\GitHubs\kiki\kiki\kiki.csproj", "{FD516A6D-9C1D-4838-BE95-9DEE48028A62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "kiki", "..\..\..\Documents\GitHub\kiki\kiki\kiki.csproj", "{1C41EFE7-62B8-4648-BF41-B988F0504227}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{CA6E14B4-8729-4346-8F16-9EC5128AEA7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA6E14B4-8729-4346-8F16-9EC5128AEA7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA6E14B4-8729-4346-8F16-9EC5128AEA7D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FD516A6D-9C1D-4838-BE95-9DEE48028A62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FD516A6D-9C1D-4838-BE95-9DEE48028A62}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FD516A6D-9C1D-4838-BE95-9DEE48028A62}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FD516A6D-9C1D-4838-BE95-9DEE48028A62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C41EFE7-62B8-4648-BF41-B988F0504227}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C41EFE7-62B8-4648-BF41-B988F0504227}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C41EFE7-62B8-4648-BF41-B988F0504227}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C41EFE7-62B8-4648-BF41-B988F0504227}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
