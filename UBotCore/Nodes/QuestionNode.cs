@@ -7,6 +7,8 @@ namespace IronicBotCore.Nodes;
 
 public class QuestionNode : NodeBase
 {
+
+
     public string Question { get; set; }
     public Identity UserAnswerOptionsType { get; set; }
     public List<string> UserAnswerOptionsValue { get; set; }
@@ -16,6 +18,7 @@ public class QuestionNode : NodeBase
     {
         base.Execute(dialog, userResponse);
 
+        Question = Question.ReplaceInternalVariables(dialog);
 
         if (!dialog.WaitingAnswer)
         {
