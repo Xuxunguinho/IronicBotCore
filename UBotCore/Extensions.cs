@@ -7,7 +7,6 @@ namespace IronicBotCore
     {
         public static string ReplaceInternalVariables(this string source, BotDialog dialog)
         {
-
             var variablePattern = new Regex(Constants.VARIABLE_REGX);
             var matchs = variablePattern.Matches(source);
             if (matchs.Count < 0) return source;
@@ -21,7 +20,6 @@ namespace IronicBotCore
                 }
 
             }
-
             return source;
         }
     }
