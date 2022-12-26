@@ -113,7 +113,7 @@ public class Bot
 
         return dialog.Id;
     }
-
+    public void Say(string message) => Console.WriteLine(message);
     private Topic CheckTopic(string message)
     {
 
