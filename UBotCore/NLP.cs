@@ -24,7 +24,7 @@ namespace IronicBotCore
             var normalizedUserResponse = userResponse.Normalized();
             foreach (string intent in positiveIntents)
             {
-                var matches = Regex.Matches(userResponse, intent);
+                var matches = Regex.Matches(normalizedUserResponse, intent);
                 if (matches.Count > 0) return true;
                 else continue;
             }
