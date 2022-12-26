@@ -7,8 +7,6 @@ namespace IronicBotCore.Nodes;
 
 public class QuestionNode : NodeBase
 {
-
-
     public string Question { get; set; }
     public Identity UserAnswerOptionsType { get; set; }
     public List<string> UserAnswerOptionsValue { get; set; }
@@ -31,7 +29,7 @@ public class QuestionNode : NodeBase
             //    foreach (var s in UserAnswerOptionsValue)
             //        strBuilder.AppendLine(" " + s);
 
-            Console.Write(strBuilder.ToString());
+            dialog.Bot.Say(strBuilder.ToString());
 
             dialog.WaitUser();
             // only for contiue flux
@@ -45,16 +43,13 @@ public class QuestionNode : NodeBase
 
             if (!matchRegx)
             {
-                Console.WriteLine(" ==> Os dados inseridos não estão no formato esperado <==");
+                dialog.Bot.Say(" ==> Os dados inseridos não estão no formato esperado <==");
                 dialog.NoWaitUser();
                 dialog.SetCurrentNode(Id);
                 dialog.Bot.Listem(dialog.Id);
                 return;
             }
-
-            //if (UserAnswerOptionsType.Name.Equals("any"))
-            //    normalizedResponse = userResponse.Normalized();
-
+           
             if (VarToSaveResponse.IsNullOrEmpty())
             {
                 VarToSaveResponse = $"@var{dialog.Variables.Count + 1}";
@@ -97,14 +92,28 @@ public class QuestionNode : NodeBase
             {
                 var strBuilder = new StringBuilder();
 
-                strBuilder.AppendLine($"Bot: Nao consigo perceber sua escolha, por favor selecione apenas uma destas opções:");
+                if (UserAnswerOptionsValue.Any(x => NLP.Equals(x,userResponse)))
+                {
+                    strBuilder.AppendLine($"Bot:Lamento,no momento não lhe posso ajudar quanto a esta questão!");
+                    strBuilder.AppendLine("Posso lhe ajudar com mais alguma coisa ?");
+                   
+                    dialog.Bot.Say(strBuilder.ToString());
+                    dialog.NoWaitUser();
+                    dialog.SetCurrentNode(Id);
+                    dialog.Bot.Listem(dialog.Id);
+                    return;
+                }
+                else {
+                    strBuilder.AppendLine($"Bot: Nao consigo perceber sua escolha, por favor selecione apenas uma destas opções:");
+                }
+                
 
                 if (!UserAnswerOptionsValue.IsNullOrEmpty())
 
                     foreach (var s in UserAnswerOptionsValue)
                         strBuilder.AppendLine(" " + s);
 
-                Console.Write(strBuilder.ToString());
+                dialog.Bot.Say(strBuilder.ToString());
                 dialog.WaitUser();
                 dialog.SetCurrentNode(Id);
                 dialog.Bot.Listem(dialog.Id);
