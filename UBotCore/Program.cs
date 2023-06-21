@@ -28,17 +28,16 @@ internal class Program
         {
 
             Id = botId,
-            Name = "Julio Bot"
-            ,
+            Name = "Julio Bot",
             Topics = new List<Topic> {
 
         new Topic {
-      Id = Guid.NewGuid(),
-      BotId = botId,
-      Description="",
-      Name ="Saudacao",
-      TriggerPhrases= new List<string> { "ola","oi","bom dia","boa noite" ,"boa Tarde"},
-      Nodes = new List<INode> {
+        Id = Guid.NewGuid(),
+        BotId = botId,
+        Description="",
+        Name ="Saudacao",
+        TriggerPhrases= new List<string> { "ola","oi","bom dia","boa noite" ,"boa Tarde"},
+        Nodes = new List<INode> {
             new QuestionNode { Id=messageId,
                 Question= "Olá, eu sou a Yuca, a Assistente Virtual da Ucall." +
                 " Em que posso ajudar? \n \n Seleccione por favor  em que Área precisa " +

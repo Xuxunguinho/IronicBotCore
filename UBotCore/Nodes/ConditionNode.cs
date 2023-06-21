@@ -28,8 +28,8 @@ public class ConditionNode : NodeBase
         var right = RightOperand.Contains("@") ? dialog.Variables[LeftOperand] : RightOperand;
 
         //normalize string for best comparison
-        left = left.ToString().Normalized().ToLower();
-        right = right.ToString().Normalized().ToLower();
+        left = left.ToString().NormalizedText().ToLower();
+        right = right.ToString().NormalizedText().ToLower();
 
         if (Operator.Equals("="))
             condition = $"eq('{left}', '{right}')";

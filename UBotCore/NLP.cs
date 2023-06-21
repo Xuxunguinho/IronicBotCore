@@ -15,13 +15,14 @@ namespace IronicBotCore
 
         public static bool Equals(this string source, string source1 ) { 
         
-            return source.Normalized().Equals( source1.Normalized() ,StringComparison.OrdinalIgnoreCase);
+            return source.NormalizedText().Equals( source1.NormalizedText() ,StringComparison.OrdinalIgnoreCase);
+            
         }
 
         public static bool CheckPositiveInstent(string userResponse)
         { 
             var positiveIntents = new[] { "certo", "sim", "ok","sim aceito", "correcto", "certamente", "yes" };
-            var normalizedUserResponse = userResponse.Normalized();
+            var normalizedUserResponse = userResponse.NormalizedText();
             foreach (string intent in positiveIntents)
             {
                 var matches = Regex.Matches(normalizedUserResponse, intent);
